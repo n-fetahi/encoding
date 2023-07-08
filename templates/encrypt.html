@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>عنوان الصفحة</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			/* background-color: #f5f5f5; */
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			padding: 10px;
+			max-width: 800px;
+			margin: 100px auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 26px;
+			margin-top: 0;
+			margin-bottom: 20px;
+			color: #333;
+			
+		}
+
+		form {
+			display: inline-block;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 10px;
+			color: #333;
+			font-weight: bold;
+			text-align: left;
+			width: 100px;
+
+		}
+
+		.first{
+			width: 300px;
+		}
+
+		textarea,input {
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 100%;
+			box-sizing: border-box;
+			margin-bottom: 20px;
+		}
+
+		button[type="submit"] {
+			padding: 10px 20px;
+			border: none;
+			background-color: #4CAF50;
+			color: #fff;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		button[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+		.container2{
+			margin: 10px;
+			border: 3px inset black;
+			padding: 10px;
+		}
+		.form-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+
+  }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="container2">
+			<h1> Message Encryption</h1>
+			<form method="POST" action="{% url 'encrypt' %}">
+				{% csrf_token %}
+				<label for="input-field">Message</label>
+				<textarea  id="input-field"	 name="message" rows="3">{{message}}</textarea>
+				<button type="submit">Encrypt</button>
+			</form>
+		</div>
+
+		<div class="container2">
+			<h1> Message Decryption </h1>
+			<form method="POST" action="{% url 'decrypt' %}">
+				{% csrf_token %}
+
+			<label class="first" for="encrypt_text">Encrypted Message:</label>
+			<textarea  id="encrypt_text" name="encrypted"   rows="3">{{ciphertext}}</textarea>
+			
+			<div class="form-field">
+				<label for="nonce">Nonce: </label>
+				<input  id="nonce"  type="text" value="{{nonce}}"   name="nonce" rows="3">
+			</div>
+			
+			<input  id="nonce" hidden type="text" value="{{message}}"  	 name="message">
+				
+			
+			<div class="form-field">
+					<label for="tag">Tag: </label>
+					<input  id="tag" type="text" value="{{tag}}"	  name="tag" rows="3">
+			</div>
+				<button type="submit">Decrypt </button>
+				<br>
+				<br>
+				<br>
+				<label class="first" for="input-field">Decrypted Message</label>
+				<textarea  id="input-field"	 name="decrypt_text"  disabled rows="3">{{decrypt_text}}</textarea>
+
+			</form>
+
+		
+		</div>
+			
+	</div>
+</body>
+</html>
